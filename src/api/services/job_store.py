@@ -1,4 +1,5 @@
-from dataclasses import dataclass, field
+import asyncio
+from dataclasses import dataclass
 from typing import Literal
 
 JobStatus = Literal["running", "done", "error"]
@@ -12,13 +13,14 @@ class Job:
     error: str | None = None
 
 
-# インメモリストア（本番では Redis に差し替える）
 _store: dict[str, Job] = {}
+_event_queues: dict[str, asyncio.Queue] = {}
 
 
 def create(job_id: str) -> Job:
     job = Job(job_id=job_id)
     _store[job_id] = job
+    _event_queues[job_id] = asyncio.Queue()
     return job
 
 
@@ -36,3 +38,13 @@ def fail(job_id: str, error: str) -> None:
     if job := _store.get(job_id):
         job.status = "error"
         job.error = error
+
+
+def publish(job_id: str, event: dict | None) -> None:
+    """イベントをキューに積む。None はストリーム終了のセンチネル。"""
+    if q := _event_queues.get(job_id):
+        q.put_nowait(event)
+
+
+def get_event_queue(job_id: str) -> asyncio.Queue | None:
+    return _event_queues.get(job_id)
