@@ -4,13 +4,13 @@ from pydantic import BaseModel, Field
 
 
 class MyCustomToolInput(BaseModel):
-    """Input schema for MyCustomTool."""
-    argument: str = Field(..., description="Description of the argument.")
+    """MyCustomTool の入力スキーマ。"""
+    argument: str = Field(..., description="引数の説明。")
 
 class MyCustomTool(BaseTool):
-    name: str = "Name of my tool"
+    name: str = "ツールの名前"
     description: str = (
-        "Clear description for what this tool is useful for, your agent will need this information to use it."
+        "このツールが何に役立つかの明確な説明。エージェントがツールを使用するためにこの情報が必要です。"
     )
     args_schema: Type[BaseModel] = MyCustomToolInput
 

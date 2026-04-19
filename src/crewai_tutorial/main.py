@@ -8,14 +8,13 @@ from crewai_tutorial.crew import CrewaiTutorial
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
-# This main file is intended to be a way for you to run your
-# crew locally, so refrain from adding unnecessary logic into this file.
-# Replace with inputs you want to test with, it will automatically
-# interpolate any tasks and agents information
+# このファイルはローカルで crew を実行するためのエントリポイントです。
+# 不要なロジックは追加せず、テストしたい inputs を設定してください。
+# タスクおよびエージェント情報は自動的に補間されます。
 
 def run():
     """
-    Run the crew.
+    crew を実行する。
     """
     inputs = {
         'topic': 'AI LLMs',
@@ -25,12 +24,12 @@ def run():
     try:
         CrewaiTutorial().crew().kickoff(inputs=inputs)
     except Exception as e:
-        raise Exception(f"An error occurred while running the crew: {e}")
+        raise Exception(f"crew の実行中にエラーが発生しました: {e}")
 
 
 def train():
     """
-    Train the crew for a given number of iterations.
+    指定したイテレーション回数だけ crew をトレーニングする。
     """
     inputs = {
         "topic": "AI LLMs",
@@ -40,21 +39,21 @@ def train():
         CrewaiTutorial().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
 
     except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
+        raise Exception(f"crew のトレーニング中にエラーが発生しました: {e}")
 
 def replay():
     """
-    Replay the crew execution from a specific task.
+    特定のタスクから crew の実行を再生する。
     """
     try:
         CrewaiTutorial().crew().replay(task_id=sys.argv[1])
 
     except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
+        raise Exception(f"crew の再生中にエラーが発生しました: {e}")
 
 def test():
     """
-    Test the crew execution and returns the results.
+    crew の実行をテストし、結果を返す。
     """
     inputs = {
         "topic": "AI LLMs",
@@ -65,21 +64,21 @@ def test():
         CrewaiTutorial().crew().test(n_iterations=int(sys.argv[1]), eval_llm=sys.argv[2], inputs=inputs)
 
     except Exception as e:
-        raise Exception(f"An error occurred while testing the crew: {e}")
+        raise Exception(f"crew のテスト中にエラーが発生しました: {e}")
 
 def run_with_trigger():
     """
-    Run the crew with trigger payload.
+    トリガーペイロードを受け取って crew を実行する。
     """
     import json
 
     if len(sys.argv) < 2:
-        raise Exception("No trigger payload provided. Please provide JSON payload as argument.")
+        raise Exception("トリガーペイロードが指定されていません。JSON ペイロードを引数として渡してください。")
 
     try:
         trigger_payload = json.loads(sys.argv[1])
     except json.JSONDecodeError:
-        raise Exception("Invalid JSON payload provided as argument")
+        raise Exception("引数として渡された JSON ペイロードが不正です。")
 
     inputs = {
         "crewai_trigger_payload": trigger_payload,
@@ -91,4 +90,4 @@ def run_with_trigger():
         result = CrewaiTutorial().crew().kickoff(inputs=inputs)
         return result
     except Exception as e:
-        raise Exception(f"An error occurred while running the crew with trigger: {e}")
+        raise Exception(f"トリガーを使った crew の実行中にエラーが発生しました: {e}")

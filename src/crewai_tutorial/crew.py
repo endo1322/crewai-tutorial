@@ -1,8 +1,7 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
-# If you want to run a snippet of code before or after the crew starts,
-# you can use the @before_kickoff and @after_kickoff decorators
+# Crew の開始前後にコードを実行したい場合は @before_kickoff / @after_kickoff デコレータを使用できます
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
 
 @CrewBase
@@ -12,11 +11,11 @@ class CrewaiTutorial():
     agents: list[BaseAgent]
     tasks: list[Task]
 
-    # Learn more about YAML configuration files here:
-    # Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
-    # Tasks: https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended
-    
-    # If you would like to add tools to your agents, you can learn more about it here:
+    # YAML 設定ファイルの詳細:
+    # エージェント: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
+    # タスク: https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended
+
+    # エージェントにツールを追加する方法:
     # https://docs.crewai.com/concepts/agents#agent-tools
     @agent
     def researcher(self) -> Agent:
@@ -32,8 +31,7 @@ class CrewaiTutorial():
             verbose=True
         )
 
-    # To learn more about structured task outputs,
-    # task dependencies, and task callbacks, check out the documentation:
+    # 構造化タスク出力・タスク依存関係・タスクコールバックの詳細:
     # https://docs.crewai.com/concepts/tasks#overview-of-a-task
     @task
     def research_task(self) -> Task:
@@ -50,14 +48,14 @@ class CrewaiTutorial():
 
     @crew
     def crew(self) -> Crew:
-        """Creates the CrewaiTutorial crew"""
-        # To learn how to add knowledge sources to your crew, check out the documentation:
+        """CrewaiTutorial crew を生成する"""
+        # ナレッジソースの追加方法:
         # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
 
         return Crew(
-            agents=self.agents, # Automatically created by the @agent decorator
-            tasks=self.tasks, # Automatically created by the @task decorator
+            agents=self.agents, # @agent デコレータにより自動生成
+            tasks=self.tasks,   # @task デコレータにより自動生成
             process=Process.sequential,
             verbose=True,
-            # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
+            # process=Process.hierarchical, # 階層型プロセスを使う場合 https://docs.crewai.com/how-to/Hierarchical/
         )

@@ -1,17 +1,17 @@
 research_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    {topic} について徹底的にリサーチしてください。
+    現在の年は {current_year} であることを踏まえ、
+    興味深く関連性の高い情報を必ず見つけ出してください。
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
+    {topic} に関する最も重要な情報を10箇条のリストにまとめたもの
   agent: researcher
 
 reporting_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    受け取ったコンテキストを精査し、各トピックをレポートの完全なセクションに展開してください。
+    レポートは詳細で、関連するすべての情報を含むようにしてください。
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
+    主要トピックごとに完全なセクションを持つ、本格的なレポート。
+    '```' を使わずマークダウン形式でフォーマットすること。
   agent: reporting_analyst
