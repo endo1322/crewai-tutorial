@@ -5,7 +5,9 @@ description = "crewai-tutorial using crewAI"
 authors = [{ name = "Your Name", email = "you@example.com" }]
 requires-python = ">=3.10,<3.14"
 dependencies = [
-    "crewai[tools]==1.14.2"
+    "crewai[tools]==1.14.2",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
 ]
 
 [project.scripts]
@@ -15,6 +17,7 @@ train = "crewai_tutorial.main:train"
 replay = "crewai_tutorial.main:replay"
 test = "crewai_tutorial.main:test"
 run_with_trigger = "crewai_tutorial.main:run_with_trigger"
+serve = "api.main:serve"
 
 [build-system]
 requires = ["hatchling"]
